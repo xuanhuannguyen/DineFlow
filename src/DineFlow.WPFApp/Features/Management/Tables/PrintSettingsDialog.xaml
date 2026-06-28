@@ -1,0 +1,45 @@
+<Window x:Class="DineFlow.WPFApp.Features.Management.Tables.PrintSettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cấu hình Thông tin In mã QR" Width="500" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="{StaticResource BackgroundGray}">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="White" BorderBrush="{StaticResource BorderGray}" BorderThickness="0,0,0,1" Padding="20,15">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="⚙" FontFamily="Segoe UI Emoji" FontSize="20" Margin="0,0,10,0"/>
+                <TextBlock Text="Cấu hình Thông tin In mã QR" FontSize="18" FontWeight="Bold" Foreground="{StaticResource Slate900}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Content -->
+        <Border Grid.Row="1" Background="White" Margin="20" CornerRadius="12" Padding="20" BorderBrush="{StaticResource BorderGray}" BorderThickness="1">
+            <StackPanel>
+                <TextBlock Text="Nhập thông tin đính kèm trước khi in (có thể để trống):" Foreground="{StaticResource Slate500}" FontSize="14" Margin="0,0,0,20"/>
+                
+                <TextBlock Text="Tên nhà hàng:" Style="{StaticResource LabelTextBlock}"/>
+                <TextBox x:Name="txtRestaurantName" Style="{StaticResource ModernTextBox}" Height="40" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Thông tin đi kèm (Wifi, Lời chúc...):" Style="{StaticResource LabelTextBlock}"/>
+                <TextBox x:Name="txtAdditionalInfo" Style="{StaticResource ModernTextBox}" 
+                         TextWrapping="Wrap" AcceptsReturn="True" MinHeight="100" VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Footer Actions -->
+        <Border Grid.Row="2" Background="White" BorderBrush="{StaticResource BorderGray}" BorderThickness="0,1,0,0" Padding="15,15,20,15">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Hủy" Style="{StaticResource NeutralButton}" MinWidth="90" Margin="0,0,15,0" Click="BtnCancel_Click"/>
+                <Button Content="Tiếp tục In" Style="{StaticResource PrimaryButton}" MinWidth="120" Click="BtnOk_Click" IsDefault="True"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
