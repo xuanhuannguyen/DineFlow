@@ -1,4 +1,5 @@
 using DineFlow.BusinessObjects.Auth;
+using DineFlow.Api.Security;
 using DineFlow.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,12 @@ namespace DineFlow.Api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IApiTokenService _tokenService;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, IApiTokenService tokenService)
     {
         _authService = authService;
+        _tokenService = tokenService;
     }
 
     [HttpPost("login")]
@@ -21,6 +24,7 @@ public class AuthController : ControllerBase
         try
         {
             var user = _authService.Login(request);
+            user.AccessToken = _tokenService.CreateToken(user);
             return Ok(user);
         }
         catch (Exception ex)

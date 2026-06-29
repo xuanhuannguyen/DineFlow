@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DineFlow.Services", "src\Di
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DineFlow.Api", "src\DineFlow.Api\DineFlow.Api.csproj", "{A877B5D9-53FD-409C-99EA-EC5E71FF317E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DineFlow.WPFApp", "src\DineFlow.WPFApp\DineFlow.WPFApp.csproj", "{33CCD209-F56E-4E61-922C-A6A736B273BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodOrder.WpfStaff", "src\DineFlow.WPFApp\DineFlow.WPFApp.csproj", "{33CCD209-F56E-4E61-922C-A6A736B273BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

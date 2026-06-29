@@ -67,3 +67,70 @@ public enum PaymentMethod
     Card = 3,
     EWallet = 4
 }
+
+public enum MenuItemType
+{
+    Single = 1,
+    Combo = 2,
+    AddonOnly = 3,
+    Drink = 4,
+    SideDish = 5
+}
+
+public enum MenuItemStatus
+{
+    Draft = 1,
+    Active = 2,
+    Inactive = 3,
+    Deleted = 4
+}
+
+public enum VisibilityStatus
+{
+    Visible = 1,
+    Hidden = 2
+}
+
+public enum AvailabilityStatus
+{
+    Available = 1,
+    SoldOut = 2,
+    TemporarilyUnavailable = 3,
+    OutOfServiceTime = 4
+}
+
+public enum StockChangeType
+{
+    Import = 1,
+    OrderDeduct = 2,
+    CancelReturn = 3,
+    Adjustment = 4,
+    Waste = 5
+}
+
+public enum PriceChangeType
+{
+    Initial = 1,
+    ManualUpdate = 2,
+    Promotion = 3
+}
+
+public enum PriceApplyType
+{
+    PerParentItem = 1,
+    PerSelection = 2
+}
+
+public enum AuditActionType
+{
+    Create = 1,
+    Update = 2,
+    Delete = 3,
+    Hide = 4,
+    Show = 5,
+    EnableSale = 6,
+    DisableSale = 7,
+    ChangePrice = 8,
+    StockImport = 9,
+    StockAdjust = 10
+}

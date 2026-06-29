@@ -1,5 +1,7 @@
+using DineFlow.BusinessObjects.Common;
 using DineFlow.BusinessObjects.Menu;
 using DineFlow.Repositories.Menu;
+using DineFlow.Services.Menu.Validation;
 
 namespace DineFlow.Services.Menu;
 
@@ -17,29 +19,55 @@ public class CategoryService : ICategoryService
     }
 
     public List<Category> GetAll() => _categoryRepository.GetAll();
+    public List<Category> GetActiveCategories() => _categoryRepository.GetActive();
+    public Category? GetById(int categoryId) => _categoryRepository.GetById(categoryId);
 
-    public Category Create(Category category)
+    public Category Create(Category category) => Create(category, UserRole.Admin);
+
+    public Category Create(Category category, UserRole role)
     {
-        Validate(category);
+        EnsureAdmin(role);
+        CategoryValidator.ValidateForSave(category);
+        EnsureUniqueName(category.CategoryName);
+        category.IsActive = true;
         return _categoryRepository.Add(category);
     }
 
-    public void Update(Category category)
+    public void Update(Category category) => Update(category, UserRole.Admin);
+
+    public void Update(Category category, UserRole role)
     {
-        Validate(category);
+        EnsureAdmin(role);
+        CategoryValidator.ValidateForSave(category);
+        EnsureUniqueName(category.CategoryName, category.CategoryId);
+        category.UpdatedAt = DateTime.UtcNow;
         _categoryRepository.Update(category);
     }
 
-    private static void Validate(Category category)
+    public void SoftDelete(int categoryId, UserRole role)
     {
-        if (string.IsNullOrWhiteSpace(category.CategoryName))
-        {
-            throw new Exception("Tên category không được để trống.");
-        }
+        EnsureAdmin(role);
+        var category = _categoryRepository.GetById(categoryId)
+            ?? throw new BusinessException("Category khong ton tai.");
 
-        if (category.DisplayOrder < 0)
+        category.IsActive = false;
+        category.UpdatedAt = DateTime.UtcNow;
+        _categoryRepository.Update(category);
+    }
+
+    private void EnsureUniqueName(string categoryName, int? excludedCategoryId = null)
+    {
+        if (_categoryRepository.ExistsByName(categoryName.Trim(), excludedCategoryId))
         {
-            throw new Exception("DisplayOrder không được âm.");
+            throw new BusinessException("Ten category da ton tai.");
+        }
+    }
+
+    private static void EnsureAdmin(UserRole role)
+    {
+        if (role != UserRole.Admin)
+        {
+            throw new BusinessException("Chi Admin duoc phep quan ly category.");
         }
     }
 }

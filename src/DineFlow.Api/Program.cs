@@ -1,6 +1,7 @@
 using DineFlow.DataAccessObjects.DbContexts;
 using DineFlow.Repositories.Auth;
 using DineFlow.Repositories.Menu;
+using DineFlow.Api.Security;
 using DineFlow.Services.Auth;
 using DineFlow.Services.Menu;
 using Microsoft.EntityFrameworkCore;
@@ -28,8 +29,11 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? "Server=localhost;Database=DineFlowDb;Trusted_Connection=True;TrustServerCertificate=True";
-    options.UseSqlServer(connectionString);
+        ?? "Host=localhost;Port=5432;Database=DineFlowDb;Username=postgres;Password=123";
+    options.UseNpgsql(connectionString, npgsqlOptions =>
+    {
+        npgsqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(5), null);
+    });
 });
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -38,6 +42,14 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IMenuItemRepository, MenuItemRepository>();
 builder.Services.AddScoped<IMenuItemService, MenuItemService>();
+builder.Services.AddScoped<IMenuAddonRepository, MenuAddonRepository>();
+builder.Services.AddScoped<IMenuAddonService, MenuAddonService>();
+builder.Services.AddScoped<IChoiceRepository, ChoiceRepository>();
+builder.Services.AddScoped<IChoiceService, ChoiceService>();
+builder.Services.AddScoped<IChannelPricingService, ChannelPricingService>();
+builder.Services.AddScoped<IStockService, StockService>();
+builder.Services.AddScoped<ICustomerMenuService, CustomerMenuService>();
+builder.Services.AddSingleton<IApiTokenService, ApiTokenService>();
 
 var app = builder.Build();
 

@@ -13,4 +13,10 @@ public static class MessageBoxHelper
     {
         MessageBox.Show(message, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
     }
+
+    public static bool ShowConfirm(string message, string title = "Xác nhận")
+    {
+        var result = MessageBox.Show(message, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
+        return result == MessageBoxResult.Yes;
+    }
 }

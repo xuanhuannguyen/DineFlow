@@ -1,12 +1,15 @@
 using DineFlow.BusinessObjects.Auth;
 using DineFlow.BusinessObjects.Common;
 using DineFlow.BusinessObjects.Tables;
+using DineFlow.BusinessObjects.Menu;
 
 namespace DineFlow.BusinessObjects.Orders;
 
 public class Order : BaseEntity
 {
     public int OrderId { get; set; }
+    public int SalesChannelId { get; set; }
+    public string? ExternalOrderCode { get; set; }
     public int TableSessionId { get; set; }
     public int? SessionCustomerId { get; set; }
     public string OrderCode { get; set; } = string.Empty;
@@ -28,5 +31,6 @@ public class Order : BaseEntity
     public TableSessionCustomer? SessionCustomer { get; set; }
     public User? CreatedByUser { get; set; }
     public User? CancelledByUser { get; set; }
+    public SalesChannel? SalesChannel { get; set; }
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

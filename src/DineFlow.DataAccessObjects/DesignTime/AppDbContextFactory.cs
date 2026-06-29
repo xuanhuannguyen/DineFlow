@@ -18,10 +18,13 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
             .Build();
 
         var connectionString = configuration.GetConnectionString("DefaultConnection")
-            ?? "Server=localhost;Database=DineFlowDb;Trusted_Connection=True;TrustServerCertificate=True";
+            ?? "Host=localhost;Port=5432;Database=DineFlowDb;Username=postgres;Password=123";
 
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-        optionsBuilder.UseSqlServer(connectionString);
+        optionsBuilder.UseNpgsql(connectionString, options =>
+        {
+            options.EnableRetryOnFailure(3, TimeSpan.FromSeconds(5), null);
+        });
 
         return new AppDbContext(optionsBuilder.Options);
     }
